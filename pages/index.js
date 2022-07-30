@@ -1,6 +1,9 @@
 import Head from "next/head";
 import { useState } from "react";
 import styles from "./index.module.css";
+import React from "react";
+
+var responses = [];
 
 export default function Home() {
   const [animalInput, setAnimalInput] = useState("");
@@ -17,30 +20,40 @@ export default function Home() {
     });
     const data = await response.json();
     setResult(data.result);
+    if(result !== undefined) {responses.push(`Me: ${result}`)};
+    responses.push(`You: ${animalInput}`);
+    console.log(responses);
     setAnimalInput("");
   }
 
   return (
     <div>
       <Head>
-        <title>OpenAI Quickstart</title>
-        <link rel="icon" href="/dog.png" />
+        <title>SmartAsk</title>
+        <link rel="icon" href="/eyes.png" />
       </Head>
 
       <main className={styles.main}>
-        <img src="/dog.png" className={styles.icon} />
-        <h3>Name my pet</h3>
+        <img src="/eyes.png" className={styles.icon} />
+        <h3>Ask me a question</h3>
         <form onSubmit={onSubmit}>
           <input
             type="text"
             name="animal"
-            placeholder="Enter an animal"
+            placeholder="Ask anything. Seriously, anything..."
             value={animalInput}
             onChange={(e) => setAnimalInput(e.target.value)}
           />
-          <input type="submit" value="Generate names" />
+          <input type="submit" value="Get a great answer" />
         </form>
         <div className={styles.result}>{result}</div>
+        <div></div>
+        <h5 className={styles.historyHead}>Chat history:</h5>
+        <div className={styles.history}>
+          {responses.map((response, index) => (
+            <div key={index}>{response}</div>
+          ))}
+        </div>
       </main>
     </div>
   );

@@ -10,7 +10,7 @@ export default async function (req, res) {
     model: "text-davinci-002",
     prompt: generatePrompt(req.body.animal),
     //prompt: req.body.animal,
-    temperature: 0.6,
+    temperature: 0.5,
     max_tokens: 60,
     top_p: 0.3,
     frequency_penalty: 0.5,
